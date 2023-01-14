@@ -3,9 +3,11 @@ import {
   HStack,
   IconButton,
   Text,
+  useColorMode,
+  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FaBowlingBall, FaMoon } from 'react-icons/fa';
+import { FaBowlingBall, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
@@ -21,6 +23,8 @@ export default function Header() {
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
+  const { toggleColorMode } = useColorMode();
+  const IconDarkMode = useColorModeValue(FaMoon, FaSun);
 
   return (
     <HStack
@@ -39,7 +43,12 @@ export default function Header() {
         </HStack>
       </Link>
       <HStack spacing={2}>
-        <IconButton aria-label="다크모드" icon={<FaMoon />} variant={'ghost'} />
+        <IconButton
+          onClick={toggleColorMode}
+          aria-label="다크모드"
+          icon={<IconDarkMode />}
+          variant={'ghost'}
+        />
         <Button onClick={onLoginOpen}>로그인</Button>
         <Button onClick={onSignupOpen} colorScheme={'teal'}>
           회원가입
