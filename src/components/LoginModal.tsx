@@ -9,19 +9,29 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay,
   VStack,
 } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
 
-interface LoginModalProps {
+interface ILoginModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
+interface ILoginForm {
+  username: string;
+  password: string;
+}
+
+export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
+  const { register, handleSubmit } = useForm<ILoginForm>();
+  const onSubmit = (data: ILoginForm) => {
+    console.log(data);
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -32,8 +42,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
             <Heading>로그인하기</Heading>
           </VStack>
         </ModalHeader>
-        <ModalBody>
-          <VStack>
+        <ModalBody
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          paddingBottom={10}
+        >
+          <VStack paddingBottom={5}>
             <InputGroup>
               <InputLeftElement
                 children={
@@ -42,7 +56,13 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   </Box>
                 }
               />
-              <Input variant={'filled'} placeholder="아이디" />
+              <Input
+                {...register('username', {
+                  required: '아이디를 입력하세요',
+                })}
+                variant={'filled'}
+                placeholder="아이디"
+              />
             </InputGroup>
             <InputGroup>
               <InputLeftElement
@@ -52,15 +72,20 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                   </Box>
                 }
               />
-              <Input variant={'filled'} placeholder="비밀번호" />
+              <Input
+                {...register('password', {
+                  required: true,
+                })}
+                type="password"
+                variant={'filled'}
+                placeholder="비밀번호"
+              />
             </InputGroup>
           </VStack>
-        </ModalBody>
-        <ModalFooter paddingBottom={8}>
-          <Button colorScheme={'teal'} w={'100%'}>
+          <Button type="submit" colorScheme={'teal'} w={'100%'}>
             로그인
           </Button>
-        </ModalFooter>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
