@@ -18,16 +18,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { login } from '../api';
-
-interface ILoginModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-interface ILoginForm {
-  username: string;
-  password: string;
-}
+import { ILoginForm, ILoginModalProps } from '../types';
 
 export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
   const { register, handleSubmit, reset } = useForm<ILoginForm>();

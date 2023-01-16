@@ -59,17 +59,6 @@ export default function Header() {
     },
   });
   const onLogout = async () => {
-    // const toastId = toast({
-    //   title: '로그아웃 중...',
-    //   status: 'loading',
-    //   position: 'bottom-right',
-    // });
-    // await logout();
-    // queryClient.refetchQueries(['me']);
-    // toast.update(toastId, {
-    //   status: 'success',
-    //   title: '로그아웃 성공',
-    // });
     mutation.mutate();
   };
 

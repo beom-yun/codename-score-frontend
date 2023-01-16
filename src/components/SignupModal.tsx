@@ -11,11 +11,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-
-interface SignupModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+import { SignupModalProps } from '../types';
 
 export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
   return (
