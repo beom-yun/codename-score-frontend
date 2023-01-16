@@ -26,3 +26,25 @@ export const logout = () =>
       headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' },
     })
     .then(response => response.data);
+
+export interface ILoginProps {
+  username: string;
+  password: string;
+}
+
+export interface ILoginSuccess {
+  ok: string;
+}
+
+export interface ILoginError {
+  error: string;
+}
+
+export const login = ({ username, password }: ILoginProps) =>
+  instance
+    .post(
+      '/users/login/',
+      { username, password },
+      { headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' } }
+    )
+    .then(response => response.data);

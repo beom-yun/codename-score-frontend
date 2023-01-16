@@ -8,12 +8,14 @@ import {
   MenuItem,
   MenuList,
   Text,
+  ToastId,
   useColorMode,
   useColorModeValue,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRef } from 'react';
 import { FaBowlingBall, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { logout } from '../api';
@@ -37,20 +39,38 @@ export default function Header() {
   const { toggleColorMode } = useColorMode();
   const IconDarkMode = useColorModeValue(FaMoon, FaSun);
   const toast = useToast();
+  const toastId = useRef<ToastId>();
+  const mutation = useMutation(logout, {
+    onMutate: () => {
+      toastId.current = toast({
+        title: '로그아웃 중...',
+        status: 'loading',
+        position: 'bottom-right',
+      });
+    },
+    onSuccess: () => {
+      if (toastId.current) {
+        queryClient.refetchQueries(['me']);
+        toast.update(toastId.current, {
+          status: 'success',
+          title: '로그아웃 성공',
+        });
+      }
+    },
+  });
   const onLogout = async () => {
-    const toastId = toast({
-      title: '로그아웃 중...',
-      status: 'loading',
-      position: 'bottom-right',
-    });
-
-    await logout();
-    queryClient.refetchQueries(['me']);
-
-    toast.update(toastId, {
-      status: 'success',
-      title: '로그아웃 성공',
-    });
+    // const toastId = toast({
+    //   title: '로그아웃 중...',
+    //   status: 'loading',
+    //   position: 'bottom-right',
+    // });
+    // await logout();
+    // queryClient.refetchQueries(['me']);
+    // toast.update(toastId, {
+    //   status: 'success',
+    //   title: '로그아웃 성공',
+    // });
+    mutation.mutate();
   };
 
   return (

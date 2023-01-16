@@ -11,10 +11,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
+import { login } from '../api';
 
 interface ILoginModalProps {
   isOpen: boolean;
@@ -27,9 +30,31 @@ interface ILoginForm {
 }
 
 export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
-  const { register, handleSubmit } = useForm<ILoginForm>();
-  const onSubmit = (data: ILoginForm) => {
-    console.log(data);
+  const { register, handleSubmit, reset } = useForm<ILoginForm>();
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const mutation = useMutation(login, {
+    onSuccess: data => {
+      toast({
+        title: '로그인 성공',
+        status: 'success',
+        position: 'bottom-right',
+      });
+      onClose();
+      queryClient.refetchQueries(['me']);
+      reset();
+    },
+    onError: error => {
+      toast({
+        title: '로그인 실패',
+        description: '아이디 또는 비밀번호를 확인하세요',
+        status: 'error',
+        position: 'bottom-right',
+      });
+    },
+  });
+  const onSubmit = ({ username, password }: ILoginForm) => {
+    mutation.mutate({ username, password });
   };
 
   return (
@@ -82,7 +107,12 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
               />
             </InputGroup>
           </VStack>
-          <Button type="submit" colorScheme={'teal'} w={'100%'}>
+          <Button
+            isLoading={mutation.isLoading}
+            type="submit"
+            colorScheme={'teal'}
+            w={'100%'}
+          >
             로그인
           </Button>
         </ModalBody>
