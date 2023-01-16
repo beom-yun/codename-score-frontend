@@ -3,26 +3,64 @@ import {
   Button,
   HStack,
   IconButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 import { FaBowlingBall, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { logout } from '../api';
 import useUser from '../lib/useUser';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
 export default function Header() {
+  const queryClient = useQueryClient();
   const { userLoading, user, isLoggedIn } = useUser();
-  const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure();
-  const { isOpen: isSignupOpen, onOpen: onSignupOpen, onClose: onSignupClose } = useDisclosure();
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+  const {
+    isOpen: isSignupOpen,
+    onOpen: onSignupOpen,
+    onClose: onSignupClose,
+  } = useDisclosure();
   const { toggleColorMode } = useColorMode();
   const IconDarkMode = useColorModeValue(FaMoon, FaSun);
+  const toast = useToast();
+  const onLogout = async () => {
+    const toastId = toast({
+      title: '로그아웃 중...',
+      status: 'loading',
+      position: 'bottom-right',
+    });
+
+    await logout();
+    queryClient.refetchQueries(['me']);
+
+    toast.update(toastId, {
+      status: 'success',
+      title: '로그아웃 성공',
+    });
+  };
 
   return (
-    <HStack w={'100%'} justifyContent={'space-between'} py={5} px={10} borderBottomWidth={1}>
+    <HStack
+      w={'100%'}
+      justifyContent={'space-between'}
+      py={5}
+      px={10}
+      borderBottomWidth={1}
+    >
       <Link to="/">
         <HStack>
           <FaBowlingBall size={32} />
@@ -32,7 +70,12 @@ export default function Header() {
         </HStack>
       </Link>
       <HStack spacing={2}>
-        <IconButton onClick={toggleColorMode} aria-label="다크모드" icon={<IconDarkMode />} variant={'ghost'} />
+        <IconButton
+          onClick={toggleColorMode}
+          aria-label="다크모드"
+          icon={<IconDarkMode />}
+          variant={'ghost'}
+        />
         {!userLoading ? (
           !isLoggedIn ? (
             <>
@@ -42,16 +85,16 @@ export default function Header() {
               </Button>
             </>
           ) : (
-            <Avatar name={user?.name} size={'sm'} />
+            <Menu>
+              <MenuButton>
+                <Avatar name={user?.name} size={'sm'} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={onLogout}>로그아웃</MenuItem>
+              </MenuList>
+            </Menu>
           )
         ) : null}
-
-        {/* <>
-          <Button onClick={onLoginOpen}>로그인</Button>
-          <Button onClick={onSignupOpen} colorScheme={'teal'}>
-            회원가입
-          </Button>
-        </> */}
       </HStack>
 
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
