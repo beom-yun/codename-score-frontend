@@ -22,13 +22,13 @@ export interface ILoginProps {
   password: string;
 }
 
-export interface ILoginSuccess {
-  ok: string;
-}
+// export interface ILoginSuccess {
+//   ok: string;
+// }
 
-export interface ILoginError {
-  error: string;
-}
+// export interface ILoginError {
+//   error: string;
+// }
 
 export interface ISignupModalProps {
   isOpen: boolean;
@@ -50,10 +50,10 @@ export interface IChangePasswordProps {
   new_password: string;
 }
 
-export interface IChangePasswordSuccess {
-  ok: string;
-}
+// export interface IChangePasswordSuccess {
+//   ok: string;
+// }
 
-export interface IChangePasswordError {
-  error: string;
-}
+// export interface IChangePasswordError {
+//   error: string;
+// }
