@@ -20,6 +20,7 @@ import { FaBowlingBall, FaMoon, FaSun } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { logout } from '../api';
 import useUser from '../lib/useUser';
+import ChangePasswordModal from './ChangePasswordModal';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 
@@ -35,6 +36,11 @@ export default function Header() {
     isOpen: isSignupOpen,
     onOpen: onSignupOpen,
     onClose: onSignupClose,
+  } = useDisclosure();
+  const {
+    isOpen: isChangePasswordOpen,
+    onOpen: onChangePasswordOpen,
+    onClose: onChangePasswordClose,
   } = useDisclosure();
   const { toggleColorMode } = useColorMode();
   const IconDarkMode = useColorModeValue(FaMoon, FaSun);
@@ -99,6 +105,9 @@ export default function Header() {
                 <Avatar name={user?.name} size={'sm'} />
               </MenuButton>
               <MenuList>
+                <MenuItem onClick={onChangePasswordOpen}>
+                  비밀번호 변경
+                </MenuItem>
                 <MenuItem onClick={onLogout}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
@@ -108,6 +117,10 @@ export default function Header() {
 
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignupModal isOpen={isSignupOpen} onClose={onSignupClose} />
+      <ChangePasswordModal
+        isOpen={isChangePasswordOpen}
+        onClose={onChangePasswordClose}
+      />
     </HStack>
   );
 }

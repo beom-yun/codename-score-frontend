@@ -1,7 +1,7 @@
 import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { ILoginProps } from './types';
+import { IChangePasswordProps, ILoginProps } from './types';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
@@ -33,6 +33,18 @@ export const login = ({ username, password }: ILoginProps) =>
     .post(
       '/users/login/',
       { username, password },
+      { headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' } }
+    )
+    .then(response => response.data);
+
+export const changePassword = ({
+  old_password,
+  new_password,
+}: IChangePasswordProps) =>
+  instance
+    .put(
+      '/users/change-password/',
+      { old_password, new_password },
       { headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' } }
     )
     .then(response => response.data);

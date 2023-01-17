@@ -11,9 +11,9 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { SignupModalProps } from '../types';
+import { ISignupModalProps } from '../types';
 
-export default function SignupModal({ isOpen, onClose }: SignupModalProps) {
+export default function SignupModal({ isOpen, onClose }: ISignupModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />

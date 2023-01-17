@@ -16,19 +16,23 @@ import {
 } from '@chakra-ui/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { FaLock, FaUser } from 'react-icons/fa';
-import { login } from '../api';
-import { ILoginForm, ILoginModalProps } from '../types';
+import { FaLock, FaLockOpen } from 'react-icons/fa';
+import { changePassword } from '../api';
+import { IChangePasswordForm, IChangePasswordModalProps } from '../types';
 
-export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
-  const { register, handleSubmit, reset } = useForm<ILoginForm>();
+export default function ChangePasswordModal({
+  isOpen,
+  onClose,
+}: IChangePasswordModalProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const mutation = useMutation(login, {
+  const { register, handleSubmit, reset } = useForm<IChangePasswordForm>();
+  const mutation = useMutation(changePassword, {
     onSuccess: data => {
       toast({
-        title: '로그인 성공',
+        title: '비밀번호 변경 성공',
         status: 'success',
+        description: '다시 로그인하세요',
         position: 'bottom-right',
       });
       onClose();
@@ -37,15 +41,15 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
     },
     onError: error => {
       toast({
-        title: '로그인 실패',
-        description: '아이디 또는 비밀번호를 확인하세요',
+        title: '비밀번호 변경 실패',
         status: 'error',
+        description: '비밀번호를 확인하세요',
         position: 'bottom-right',
       });
     },
   });
-  const onSubmit = ({ username, password }: ILoginForm) => {
-    mutation.mutate({ username, password });
+  const onSubmit = ({ old_password, new_password }: IChangePasswordForm) => {
+    mutation.mutate({ old_password, new_password });
   };
 
   return (
@@ -55,25 +59,24 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
         <ModalCloseButton />
         <ModalHeader>
           <VStack py={8}>
-            <Heading>로그인하기</Heading>
+            <Heading>비밀번호 변경</Heading>
           </VStack>
         </ModalHeader>
-        <ModalBody as="form" onSubmit={handleSubmit(onSubmit)} pb={10}>
-          <VStack paddingBottom={5}>
+        <ModalBody as={'form'} onSubmit={handleSubmit(onSubmit)} pb={10}>
+          <VStack pb={5}>
             <InputGroup>
               <InputLeftElement
                 children={
                   <Box color={'gray.500'}>
-                    <FaUser />
+                    <FaLockOpen />
                   </Box>
                 }
               />
               <Input
-                {...register('username', {
-                  required: '아이디를 입력하세요',
-                })}
+                {...register('old_password', { required: true })}
+                type={'password'}
                 variant={'filled'}
-                placeholder="아이디"
+                placeholder="기존 비밀번호"
               />
             </InputGroup>
             <InputGroup>
@@ -85,22 +88,20 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
                 }
               />
               <Input
-                {...register('password', {
-                  required: true,
-                })}
-                type="password"
+                {...register('new_password', { required: true })}
+                type={'password'}
                 variant={'filled'}
-                placeholder="비밀번호"
+                placeholder="새로운 비밀번호"
               />
             </InputGroup>
           </VStack>
           <Button
             isLoading={mutation.isLoading}
-            type="submit"
+            type={'submit'}
             colorScheme={'teal'}
             w={'100%'}
           >
-            로그인
+            변경하기
           </Button>
         </ModalBody>
       </ModalContent>
