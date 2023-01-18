@@ -2,24 +2,7 @@ import { Heading, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thea
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { getRegularGame } from '../api';
-
-interface IBowler {
-  name: string;
-}
-
-interface IRegularGameScore {
-  bowler: IBowler;
-  first: number;
-  second: number;
-  third: number;
-  fourth: number;
-  total_score: number;
-  game_count: number;
-  average: number;
-  last_average: number;
-  average_change: number;
-  high_low: number;
-}
+import { IRegularGameScore } from '../types';
 
 export default function RegularGameDetail() {
   const { regularGamePk } = useParams();

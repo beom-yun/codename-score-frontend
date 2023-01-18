@@ -1,14 +1,6 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Heading,
-  Image,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Card, CardBody, CardFooter, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import { FaChevronRight } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export default function MainCards() {
   return (
@@ -26,27 +18,15 @@ export default function MainCards() {
           <Text>정기전을 생성, 진행하며 기록을 수정할 수 있습니다.</Text>
         </CardBody>
         <CardFooter w={'100%'} justifyContent={'flex-end'}>
-          <Button
-            colorScheme={'facebook'}
-            mr={2}
-            size={'sm'}
-            rightIcon={<FaChevronRight />}
-          >
-            새로운 정기전 생성
-          </Button>
-          <Button
-            colorScheme={'facebook'}
-            mr={2}
-            size={'sm'}
-            rightIcon={<FaChevronRight />}
-          >
+          <Link to={'regular-game/new/'}>
+            <Button colorScheme={'facebook'} mr={2} size={'sm'} rightIcon={<FaChevronRight />}>
+              새로운 정기전 생성
+            </Button>
+          </Link>
+          <Button colorScheme={'facebook'} mr={2} size={'sm'} rightIcon={<FaChevronRight />}>
             현재 진행중 정기전
           </Button>
-          <Button
-            colorScheme={'facebook'}
-            size={'sm'}
-            rightIcon={<FaChevronRight />}
-          >
+          <Button colorScheme={'facebook'} size={'sm'} rightIcon={<FaChevronRight />}>
             정기전 기록 수정
           </Button>
         </CardFooter>

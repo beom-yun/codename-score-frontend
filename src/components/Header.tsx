@@ -27,16 +27,8 @@ import SignupModal from './SignupModal';
 export default function Header() {
   const queryClient = useQueryClient();
   const { userLoading, user, isLoggedIn } = useUser();
-  const {
-    isOpen: isLoginOpen,
-    onOpen: onLoginOpen,
-    onClose: onLoginClose,
-  } = useDisclosure();
-  const {
-    isOpen: isSignupOpen,
-    onOpen: onSignupOpen,
-    onClose: onSignupClose,
-  } = useDisclosure();
+  const { isOpen: isLoginOpen, onOpen: onLoginOpen, onClose: onLoginClose } = useDisclosure();
+  const { isOpen: isSignupOpen, onOpen: onSignupOpen, onClose: onSignupClose } = useDisclosure();
   const {
     isOpen: isChangePasswordOpen,
     onOpen: onChangePasswordOpen,
@@ -69,13 +61,7 @@ export default function Header() {
   };
 
   return (
-    <HStack
-      w={'100%'}
-      justifyContent={'space-between'}
-      py={5}
-      px={10}
-      borderBottomWidth={1}
-    >
+    <HStack w={'100%'} justifyContent={'space-between'} py={5} px={10} borderBottomWidth={1}>
       <Link to="/">
         <HStack>
           <FaBowlingBall size={32} />
@@ -85,12 +71,7 @@ export default function Header() {
         </HStack>
       </Link>
       <HStack spacing={2}>
-        <IconButton
-          onClick={toggleColorMode}
-          aria-label="다크모드"
-          icon={<IconDarkMode />}
-          variant={'ghost'}
-        />
+        <IconButton onClick={toggleColorMode} aria-label="다크모드" icon={<IconDarkMode />} variant={'ghost'} />
         {!userLoading ? (
           !isLoggedIn ? (
             <>
@@ -105,9 +86,7 @@ export default function Header() {
                 <Avatar name={user?.name} size={'sm'} />
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={onChangePasswordOpen}>
-                  비밀번호 변경
-                </MenuItem>
+                <MenuItem onClick={onChangePasswordOpen}>비밀번호 변경</MenuItem>
                 <MenuItem onClick={onLogout}>로그아웃</MenuItem>
               </MenuList>
             </Menu>
@@ -117,10 +96,7 @@ export default function Header() {
 
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignupModal isOpen={isSignupOpen} onClose={onSignupClose} />
-      <ChangePasswordModal
-        isOpen={isChangePasswordOpen}
-        onClose={onChangePasswordClose}
-      />
+      <ChangePasswordModal isOpen={isChangePasswordOpen} onClose={onChangePasswordClose} />
     </HStack>
   );
 }

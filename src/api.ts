@@ -8,18 +8,16 @@ const instance = axios.create({
   withCredentials: true,
 });
 
-export const getRegularGameDates = () =>
-  instance.get('scores/').then(response => response.data);
+export const getRegularGameDates = () => instance.get('scores/dates/').then(response => response.data);
 
 export const getRegularGame = ({ queryKey }: QueryFunctionContext) => {
   const [_, regularGamePk] = queryKey;
-  return instance
-    .get(`scores/${regularGamePk}/`)
-    .then(response => response.data);
+  return instance.get(`scores/${regularGamePk}/`).then(response => response.data);
 };
 
-export const getMe = () =>
-  instance.get('users/me/').then(response => response.data);
+export const getBowlers = () => instance.get('users/').then(response => response.data);
+
+export const getMe = () => instance.get('users/me/').then(response => response.data);
 
 export const logout = () =>
   instance
@@ -30,17 +28,10 @@ export const logout = () =>
 
 export const login = ({ username, password }: ILoginProps) =>
   instance
-    .post(
-      '/users/login/',
-      { username, password },
-      { headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' } }
-    )
+    .post('/users/login/', { username, password }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') || '' } })
     .then(response => response.data);
 
-export const changePassword = ({
-  old_password,
-  new_password,
-}: IChangePasswordProps) =>
+export const changePassword = ({ old_password, new_password }: IChangePasswordProps) =>
   instance
     .put(
       '/users/change-password/',

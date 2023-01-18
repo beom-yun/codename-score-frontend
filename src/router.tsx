@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from './components/Root';
 import Home from './routes/Home';
+import NewRegularGame from './routes/NewRegularGame';
 import NotFound from './routes/NotFound';
-import RegularGameDetail from './routes/RegularGameDetail';
+import RegularGame from './routes/RegularGame';
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,12 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'scores/:regularGamePk',
-        element: <RegularGameDetail />,
+        path: 'regular-game/',
+        element: <RegularGame />,
+      },
+      {
+        path: 'regular-game/new/',
+        element: <NewRegularGame />,
       },
     ],
   },
