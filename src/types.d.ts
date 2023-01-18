@@ -63,7 +63,7 @@ interface IRegularGameDate {
   date: number;
 }
 
-interface IBowler {
+interface IPublicBowler {
   pk: number;
   name: string;
 }
@@ -80,4 +80,9 @@ interface IRegularGameScore {
   last_average: number;
   average_change: number;
   high_low: number;
+}
+
+export interface INewRegularGameProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
