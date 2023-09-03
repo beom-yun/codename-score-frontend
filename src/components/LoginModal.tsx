@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  Divider,
-  HStack,
   Input,
   InputGroup,
   InputLeftElement,
@@ -18,11 +16,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
-import { FaComment, FaLock, FaUser } from 'react-icons/fa6';
+import { FaLock, FaUser } from 'react-icons/fa6';
 import { passwordLogin } from '../api';
 import { IPasswordLoginVariables } from '../types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
+import SocialLogin from './SocialLogin';
 
 interface ILoginModalProps {
   isOpen: boolean;
@@ -102,16 +101,7 @@ export default function LoginModal({ isOpen, onClose }: ILoginModalProps) {
             로그인
           </Button>
 
-          <HStack>
-            <Divider />
-            <Text color={'gray.500'} fontSize={'xs'} as="b">
-              OR
-            </Text>
-            <Divider />
-          </HStack>
-          <Button my={4} w={'100%'} colorScheme="yellow" leftIcon={<FaComment />}>
-            카카오로 로그인하기
-          </Button>
+          <SocialLogin />
         </ModalBody>
       </ModalContent>
     </Modal>

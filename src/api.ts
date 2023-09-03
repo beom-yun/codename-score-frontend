@@ -22,3 +22,8 @@ export const passwordLogin = ({ username, password }: IPasswordLoginVariables) =
   instance
     .post('users/log-in/', { username, password }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
     .then(response => response.data);
+
+export const kakaoLogin = (code: string) =>
+  instance
+    .post('users/kakao/', { code }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
+    .then(response => response.status);
