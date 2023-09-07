@@ -3,6 +3,7 @@ import Root from './components/Root';
 import Home from './routes/Home';
 import NotFound from './routes/NotFound';
 import KakaoConfirm from './routes/KakaoConfirm';
+import RecordsHome from './routes/RecordsHome';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: 'social',
         children: [{ path: 'kakao', element: <KakaoConfirm /> }],
+      },
+      {
+        path: 'records/:datePk',
+        element: <RecordsHome />,
       },
     ],
   },

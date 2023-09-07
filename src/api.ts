@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
 import { IPasswordLoginVariables } from './types';
+import { QueryFunctionContext } from '@tanstack/react-query';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
@@ -27,3 +28,8 @@ export const kakaoLogin = (code: string) =>
   instance
     .post('users/kakao/', { code }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
     .then(response => response.status);
+
+export const getRegularGameScore = ({ queryKey }: QueryFunctionContext) => {
+  const [_, datePk] = queryKey;
+  return instance.get(`regular-games/${datePk}/scores/`).then(response => response.data);
+};
