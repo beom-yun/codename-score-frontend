@@ -1,5 +1,4 @@
-import { Box, HStack, Switch, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import { Box, HStack, Switch, Text, useBoolean } from '@chakra-ui/react';
 import ReactApexChart from 'react-apexcharts';
 import { IRegularGameScore } from '../types';
 import { useQuery } from '@tanstack/react-query';
@@ -8,7 +7,7 @@ import { getRegularGameScore } from '../api';
 
 export default function RegularGameChart() {
   const { datePk } = useParams();
-  const [swValue, setSwValue] = useState(true);
+  const [swValue, setSwValue] = useBoolean();
   const { isLoading, data } = useQuery<IRegularGameScore[]>(['regularGame', datePk], getRegularGameScore);
 
   return (
@@ -16,9 +15,9 @@ export default function RegularGameChart() {
       {!isLoading ? (
         <Box w={'100%'}>
           <HStack w={'100%'} justifyContent={'flex-end'} py={5} px={5}>
-            <Text>점수</Text>
-            <Switch onChange={() => setSwValue(!swValue)} />
             <Text>평균</Text>
+            <Switch onChange={setSwValue.toggle} />
+            <Text>점수</Text>
           </HStack>
           {swValue ? (
             <ReactApexChart
@@ -36,7 +35,7 @@ export default function RegularGameChart() {
                 plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
                 xaxis: { categories: data?.map(score => score.bowler.name), max: 300 },
                 tooltip: { shared: true, intersect: false },
-                legend: { show: true, horizontalAlign: 'right' },
+                legend: { show: true, horizontalAlign: 'right', onItemClick: { toggleDataSeries: false } },
               }}
             />
           ) : (

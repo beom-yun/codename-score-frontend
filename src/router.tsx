@@ -4,6 +4,7 @@ import Home from './routes/Home';
 import NotFound from './routes/NotFound';
 import KakaoConfirm from './routes/KakaoConfirm';
 import RecordsHome from './routes/RecordsHome';
+import RecordsDetail from './routes/RecordsDetail';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
       {
         path: 'records',
         element: <RecordsHome />,
+        children: [{ path: ':datePk', element: <RecordsDetail /> }],
       },
     ],
   },
