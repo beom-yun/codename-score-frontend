@@ -56,12 +56,12 @@ export default function Header() {
 
   return (
     <Stack
-      px={{ sm: 0, md: 40 }}
+      px={{ sm: 10, md: 40 }}
       py={5}
       borderBottomWidth={1}
       justifyContent={'space-between'}
       alignItems={'center'}
-      direction={{ sm: 'column', md: 'row' }}
+      direction={'row'}
       spacing={{ sm: 5, md: 0 }}
     >
       <Link to={'/'}>

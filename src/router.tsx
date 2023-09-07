@@ -20,7 +20,7 @@ const router = createBrowserRouter([
         children: [{ path: 'kakao', element: <KakaoConfirm /> }],
       },
       {
-        path: 'records/:datePk',
+        path: 'records',
         element: <RecordsHome />,
       },
     ],
