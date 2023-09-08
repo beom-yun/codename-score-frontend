@@ -10,6 +10,11 @@ const instance = axios.create({
 
 export const getRegularGameDates = () => instance.get('regular-games/').then(response => response.data);
 
+export const getRegularGameDate = ({ queryKey }: QueryFunctionContext) => {
+  const [_, datePk] = queryKey;
+  return instance.get(`regular-games/${datePk}`).then(response => response.data);
+};
+
 export const getMe = () => instance.get('users/me/').then(response => response.data);
 
 export const logOut = () =>

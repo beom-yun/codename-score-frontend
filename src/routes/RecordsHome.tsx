@@ -1,9 +1,10 @@
-import { Stack, VStack, Select, Text, HStack, Switch } from '@chakra-ui/react';
+import { Stack, VStack, Select, Text, HStack, Switch, Divider } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getRegularGameDates } from '../api';
 import { IRegularGameDate } from '../types';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import NumOfBowlersChart from '../components/NumOfBowlersChart';
 
 export default function RecordsHome() {
   const [selectValue, setSelectValue] = useState('');
@@ -19,14 +20,14 @@ export default function RecordsHome() {
       spacing={{ sm: 5, md: 0 }}
     >
       {!isLoading ? (
-        <VStack w={'100%'}>
-          <HStack w={'100%'} justifyContent={'space-between'} px={10}>
+        <VStack w={'100%'} px={10}>
+          <HStack w={'100%'} justifyContent={'space-between'}>
             <Select
               value={selectValue}
               variant={'unstyled'}
               w={{ sm: '50%', md: '20%' }}
               placeholder="정기전 날짜 선택"
-              onChange={event => {
+              onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
                 setSelectValue(event.target.value);
                 navigate(`${event.target.value}`);
               }}
@@ -43,7 +44,15 @@ export default function RecordsHome() {
               <Text>차트</Text>
             </HStack>
           </HStack>
-          <Outlet />
+          <Divider marginTop={3} marginBottom={5} />
+          {selectValue ? (
+            <Outlet />
+          ) : (
+            <NumOfBowlersChart />
+            // <Box mt={10}>
+            //   <Heading>정기전 날짜를 선택해주세요.</Heading>
+            // </Box>
+          )}
         </VStack>
       ) : null}
     </Stack>

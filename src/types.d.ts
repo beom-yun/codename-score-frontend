@@ -2,6 +2,7 @@ export interface IRegularGameDate {
   id: number;
   round_of_game: number;
   date: string;
+  num_of_bowlers: number;
 }
 
 export interface IUser {
