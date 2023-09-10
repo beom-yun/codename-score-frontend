@@ -16,11 +16,9 @@ export default function NumOfBowlersChart() {
           series={[{ name: '참가인원', data: data?.map(date => date.num_of_bowlers) as number[] }]}
           options={{
             stroke: { curve: 'smooth' },
-            // tooltip: { enabled: false },
             xaxis: { categories: data?.map(date => date.date) },
             yaxis: { tickAmount: 1, min: 0 },
             markers: { size: 0 },
-            // dataLabels: { enabled: true },
             legend: { show: true, horizontalAlign: 'right', onItemClick: { toggleDataSeries: false } },
           }}
         />

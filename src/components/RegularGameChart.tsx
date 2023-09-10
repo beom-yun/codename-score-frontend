@@ -28,12 +28,22 @@ export default function RegularGameChart() {
             <ReactApexChart
               type="bar"
               height={dateData ? (dateData?.num_of_bowlers < 2 ? 150 : 50 * dateData?.num_of_bowlers) : 0}
-              series={[{ name: '평균', data: data?.map(score => score.average) as number[] }]}
+              series={[
+                {
+                  name: '평균',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.average) as number[],
+                },
+              ]}
               options={{
                 grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
                 dataLabels: { offsetX: -5 },
                 plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
-                xaxis: { categories: data?.map(score => score.bowler.name), max: 300 },
+                xaxis: {
+                  categories: data
+                    ?.sort((a, b) => b.average - a.average)
+                    .map((score, index) => `${index + 1}. ${score.bowler.name}`),
+                  max: 300,
+                },
                 tooltip: { shared: true, intersect: false },
                 legend: { show: true, horizontalAlign: 'right' },
               }}
@@ -43,16 +53,33 @@ export default function RegularGameChart() {
               type="bar"
               height={dateData ? (dateData?.num_of_bowlers < 2 ? 300 : 100 * dateData?.num_of_bowlers) : 0}
               series={[
-                { name: '1게임', data: data?.map(score => score.score1) as number[] },
-                { name: '2게임', data: data?.map(score => score.score2) as number[] },
-                { name: '3게임', data: data?.map(score => score.score3) as number[] },
-                { name: '4게임', data: data?.map(score => score.score4) as number[] },
+                {
+                  name: '1게임',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.score1) as number[],
+                },
+                {
+                  name: '2게임',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.score2) as number[],
+                },
+                {
+                  name: '3게임',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.score3) as number[],
+                },
+                {
+                  name: '4게임',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.score4) as number[],
+                },
               ]}
               options={{
                 grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
                 dataLabels: { offsetX: -5 },
                 plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
-                xaxis: { categories: data?.map(score => score.bowler.name), max: 300 },
+                xaxis: {
+                  categories: data
+                    ?.sort((a, b) => b.average - a.average)
+                    .map((score, index) => `${index + 1}. ${score.bowler.name}`),
+                  max: 300,
+                },
                 tooltip: { shared: true, intersect: false },
                 legend: { show: true, horizontalAlign: 'right', onItemClick: { toggleDataSeries: false } },
               }}
@@ -61,12 +88,22 @@ export default function RegularGameChart() {
             <ReactApexChart
               type="bar"
               height={dateData ? (dateData?.num_of_bowlers < 2 ? 150 : 50 * dateData?.num_of_bowlers) : 0}
-              series={[{ name: '총점', data: data?.map(score => score.total_score) as number[] }]}
+              series={[
+                {
+                  name: '총점',
+                  data: data?.sort((a, b) => b.average - a.average).map(score => score.total_score) as number[],
+                },
+              ]}
               options={{
                 grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
                 dataLabels: { offsetX: -5 },
                 plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
-                xaxis: { categories: data?.map(score => `${score.bowler.name} (${score.game_count}게임)`), max: 1200 },
+                xaxis: {
+                  categories: data
+                    ?.sort((a, b) => b.average - a.average)
+                    .map((score, index) => `${index + 1}. ${score.bowler.name} (${score.game_count}게임)`),
+                  max: 1200,
+                },
                 tooltip: { shared: true, intersect: false },
                 legend: { show: true, horizontalAlign: 'right' },
               }}
