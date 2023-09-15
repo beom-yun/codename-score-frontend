@@ -17,7 +17,7 @@ export default function RegularGameChart() {
       {!isLoading ? (
         <Box w={'100%'} textAlign={'center'}>
           <RadioGroup defaultValue="1" value={radioValue} onChange={setRadioValue}>
-            <HStack w={'100%'} justifyContent={'flex-end'} p={5} spacing={5}>
+            <HStack w={'100%'} justifyContent={'flex-end'} p={5} pb={2} spacing={5}>
               <Radio value="1">평균</Radio>
               <Radio value="2">점수</Radio>
               <Radio value="3">총점</Radio>

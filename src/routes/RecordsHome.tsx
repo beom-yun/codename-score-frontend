@@ -1,4 +1,4 @@
-import { Stack, VStack, Select, Text, HStack, Switch, Divider } from '@chakra-ui/react';
+import { Stack, VStack, Select, HStack, Divider } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getRegularGameDates } from '../api';
 import { IRegularGameDate } from '../types';
@@ -38,21 +38,9 @@ export default function RecordsHome() {
                 </option>
               ))}
             </Select>
-            <HStack spacing={5} w={{ sm: '50%', md: '20%' }} justifyContent={'right'}>
-              <Text>표</Text>
-              <Switch defaultChecked />
-              <Text>차트</Text>
-            </HStack>
           </HStack>
           <Divider marginTop={3} marginBottom={5} />
-          {selectValue ? (
-            <Outlet />
-          ) : (
-            <NumOfBowlersChart />
-            // <Box mt={10}>
-            //   <Heading>정기전 날짜를 선택해주세요.</Heading>
-            // </Box>
-          )}
+          {selectValue ? <Outlet /> : <NumOfBowlersChart />}
         </VStack>
       ) : null}
     </Stack>
