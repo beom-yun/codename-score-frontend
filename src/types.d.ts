@@ -37,6 +37,9 @@ export interface IRegularGameScore {
   game_count: number;
   average: number;
   high_low: number;
+  prev_total_score: number;
+  prev_average: number;
+  rank: number;
 }
 
 export interface IPasswordLoginVariables {

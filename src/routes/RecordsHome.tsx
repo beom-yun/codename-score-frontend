@@ -12,15 +12,9 @@ export default function RecordsHome() {
   const { isLoading, data } = useQuery<IRegularGameDate[]>(['regularGameDates'], getRegularGameDates);
 
   return (
-    <Stack
-      px={{ sm: 0, md: 40 }}
-      py={5}
-      justifyContent={'space-between'}
-      alignItems={'center'}
-      spacing={{ sm: 5, md: 0 }}
-    >
+    <Stack py={5} justifyContent={'space-between'} alignItems={'center'} spacing={{ sm: 5, md: 0 }}>
       {!isLoading ? (
-        <VStack w={'100%'} px={10}>
+        <VStack w={'100%'} px={{ sm: 10, md: 20, lg: 40 }}>
           <HStack w={'100%'} justifyContent={'space-between'}>
             <Select
               value={selectValue}

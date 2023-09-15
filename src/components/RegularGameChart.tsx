@@ -41,7 +41,7 @@ export default function RegularGameChart() {
                 xaxis: {
                   categories: data
                     ?.sort((a, b) => b.average - a.average)
-                    .map((score, index) => `${index + 1}. ${score.bowler.name}`),
+                    .map(score => `${score.rank}. ${score.bowler.name}`),
                   max: 300,
                 },
                 tooltip: { shared: true, intersect: false },
@@ -77,7 +77,7 @@ export default function RegularGameChart() {
                 xaxis: {
                   categories: data
                     ?.sort((a, b) => b.average - a.average)
-                    .map((score, index) => `${index + 1}. ${score.bowler.name}`),
+                    .map(score => `${score.rank}. ${score.bowler.name}`),
                   max: 300,
                 },
                 tooltip: { shared: true, intersect: false },
@@ -101,7 +101,7 @@ export default function RegularGameChart() {
                 xaxis: {
                   categories: data
                     ?.sort((a, b) => b.average - a.average)
-                    .map((score, index) => `${index + 1}. ${score.bowler.name} (${score.game_count}게임)`),
+                    .map(score => `${score.rank}. ${score.bowler.name} (${score.game_count}게임)`),
                   max: 1200,
                 },
                 tooltip: { shared: true, intersect: false },
