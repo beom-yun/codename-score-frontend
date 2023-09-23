@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { IRegularGameScore } from '../types';
 import { getRegularGameScore } from '../api';
-import { FaCaretDown, FaCaretUp, FaMinus, FaPlusMinus } from 'react-icons/fa6';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa6';
 
 export default function RegularGameTable() {
   const { datePk } = useParams();

@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <VStack>
       <Heading>Home</Heading>
-      <Link to={'/records'}>레코드</Link>
+      <Link to={'/records'}>레코드 홈</Link>
     </VStack>
   );
 }

@@ -5,6 +5,8 @@ import NotFound from './routes/NotFound';
 import KakaoConfirm from './routes/KakaoConfirm';
 import RecordsHome from './routes/RecordsHome';
 import RecordsDetail from './routes/RecordsDetail';
+import RecordsRegularGame from './routes/RecordsRegularGame';
+import RecordsMe from './routes/RecordsMe';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +25,20 @@ const router = createBrowserRouter([
       {
         path: 'records',
         element: <RecordsHome />,
-        children: [{ path: ':datePk', element: <RecordsDetail /> }],
+      },
+      {
+        path: 'records/regular-games',
+        element: <RecordsRegularGame />,
+        children: [
+          {
+            path: ':datePk',
+            element: <RecordsDetail />,
+          },
+        ],
+      },
+      {
+        path: 'records/me',
+        element: <RecordsMe />,
       },
     ],
   },

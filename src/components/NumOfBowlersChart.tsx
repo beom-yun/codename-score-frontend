@@ -17,7 +17,7 @@ export default function NumOfBowlersChart() {
           options={{
             stroke: { curve: 'smooth' },
             xaxis: { categories: data?.map(date => date.date) },
-            yaxis: { tickAmount: 1, min: 0 },
+            yaxis: { tickAmount: 1, min: 0, decimalsInFloat: 0 },
             markers: { size: 0 },
             legend: { show: true, horizontalAlign: 'right', onItemClick: { toggleDataSeries: false } },
           }}

@@ -38,3 +38,5 @@ export const getRegularGameScore = ({ queryKey }: QueryFunctionContext) => {
   const [_, datePk] = queryKey;
   return instance.get(`regular-games/${datePk}/scores/`).then(response => response.data);
 };
+
+export const getMyRecords = () => instance.get('regular-games/me/').then(response => response.data);
