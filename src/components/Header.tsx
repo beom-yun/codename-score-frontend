@@ -6,6 +6,7 @@ import {
   IconButton,
   Menu,
   MenuButton,
+  MenuDivider,
   MenuItem,
   MenuList,
   Stack,
@@ -16,7 +17,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { FaBowlingBall, FaMoon, FaSun } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import useUser from '../lib/useUser';
@@ -34,6 +35,7 @@ export default function Header() {
   const queryClient = useQueryClient();
   const toast = useToast();
   const toastId = useRef<ToastId>();
+  const navigate = useNavigate();
   const mutation = useMutation(logOut, {
     onMutate: () => {
       toastId.current = toast({ title: '로그아웃 중...', status: 'loading', position: 'bottom-right' });
@@ -86,6 +88,9 @@ export default function Header() {
                 <Avatar size={'md'} name={user?.name} src={user?.avatar} />
               </MenuButton>
               <MenuList>
+                <MenuItem onClick={() => navigate('/records/me')}>내 기록</MenuItem>
+                <MenuItem onClick={() => navigate('/mypage')}>마이페이지</MenuItem>
+                <MenuDivider />
                 <MenuItem onClick={onLogOut}>로그아웃</MenuItem>
               </MenuList>
             </Menu>

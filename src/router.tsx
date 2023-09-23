@@ -7,6 +7,7 @@ import RecordsHome from './routes/RecordsHome';
 import RecordsDetail from './routes/RecordsDetail';
 import RecordsRegularGame from './routes/RecordsRegularGame';
 import RecordsMe from './routes/RecordsMe';
+import MyPage from './routes/MyPage';
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <Home />,
+      },
+      {
+        path: 'mypage',
+        element: <MyPage />,
       },
       {
         path: 'social',

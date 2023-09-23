@@ -100,3 +100,13 @@ export interface IMyRecords {
   average_change: number[];
   rank_change: number[];
 }
+
+export interface IEditMyPage {
+  name: string;
+  // gender: string;
+  // position: string;
+  phone_number: string;
+  email: string;
+  birth_date: string;
+  join_date: string;
+}
