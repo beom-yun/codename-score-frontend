@@ -97,8 +97,14 @@ export interface IMyRecords {
     '29': number;
     '30': number;
   };
-  average_change: number[];
-  rank_change: number[];
+  average_rank_change: IDateScoreRank[];
+  // rank_change: number[];
+}
+
+export interface IDateScoreRank {
+  date: string;
+  score: number;
+  rank: number;
 }
 
 export interface IEditMyPage {
