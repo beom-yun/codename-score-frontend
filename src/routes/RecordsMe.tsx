@@ -62,15 +62,28 @@ export default function RecordsMe() {
 
           <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
             <VStack alignItems={'center'} h={'100%'} pt={4}>
-              <Heading fontSize={26}>프로필</Heading>
+              <Heading fontSize={26}>Analysis</Heading>
               <Divider />
               <VStack spacing={2} justifyContent={'center'} h={'100%'}>
                 <ReactApexChart
                   type="radar"
                   height={'100%'}
-                  series={[{ data: [80, 60, 50, 70, 80, 90] }]}
+                  series={[
+                    {
+                      data: [
+                        data?.participation_rate,
+                        (data?.max_score as number) / 3,
+                        Math.max(...(data?.regular_game_scores.map(x => x.average) as number[])) / 3,
+                        (data?.total_average as number) / 3,
+                        50,
+                        50,
+                      ] as number[],
+                    },
+                  ]}
                   options={{
                     xaxis: { categories: ['참여율', '최고 점수', '최고 에버', '전체 에버', '시드', '회비 납부'] },
+                    markers: { size: 0 },
+                    yaxis: { labels: { show: false }, min: 0, max: 100, tickAmount: 5, decimalsInFloat: 0 },
                   }}
                 />
               </VStack>
@@ -322,7 +335,9 @@ export default function RecordsMe() {
                               </Text>
                             </Td>
                             <Td>
-                              <Text textAlign={'center'}>{score.rank}</Text>
+                              <Text textAlign={'center'}>
+                                {score.rank} / {score.participant_count}
+                              </Text>
                             </Td>
                             <Td>
                               <Text textAlign={'center'}>{score.total_score}</Text>
