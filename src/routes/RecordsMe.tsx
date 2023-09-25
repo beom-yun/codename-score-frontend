@@ -19,14 +19,16 @@ export default function RecordsMe() {
           px={{ sm: 10, md: 20, lg: 40 }}
           h={'1050px'}
           gap={5}
-          templateRows={'repeat(3, 1fr)'}
+          templateRows={'repeat(4, 1fr)'}
           templateColumns={'repeat(6, 1fr)'}
           rounded={'xl'}
         >
-          <GridItem colSpan={3} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
-            <VStack justifyContent={'center'} alignItems={'center'} h={'100%'} gap={5}>
-              <Avatar size={{ sm: 'md', md: 'lg', lg: 'xl' }} src={user?.avatar} name={user?.name} />
-              <VStack spacing={1}>
+          <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
+            <VStack alignItems={'center'} h={'100%'} py={4}>
+              <Heading fontSize={26}>프로필</Heading>
+              <Divider />
+              <VStack spacing={2} justifyContent={'center'} h={'100%'}>
+                <Avatar size={{ sm: 'md', md: 'lg', lg: 'xl' }} src={user?.avatar} name={user?.name} mb={2} />
                 <Heading>{user?.name}</Heading>
                 <Text>
                   {user?.position === 'chairman'
@@ -41,26 +43,48 @@ export default function RecordsMe() {
             </VStack>
           </GridItem>
 
-          <GridItem colSpan={3} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
+          <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
+            <VStack alignItems={'center'} h={'100%'} py={4}>
+              <Heading fontSize={26}>프로필</Heading>
+              <Divider />
+              <VStack spacing={2} justifyContent={'center'} h={'100%'}>
+                <Avatar size={{ sm: 'md', md: 'lg', lg: 'xl' }} src={user?.avatar} name={user?.name} mb={2} />
+                <Heading>{user?.name}</Heading>
+                <Text>
+                  {user?.position === 'chairman'
+                    ? '회장'
+                    : user?.position === 'executive'
+                    ? '운영진'
+                    : user?.position === 'general'
+                    ? '일반회원'
+                    : '게스트'}
+                </Text>
+              </VStack>
+            </VStack>
+          </GridItem>
+
+          <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
             <VStack h={'100%'} py={4}>
               <Heading fontSize={26}>일반</Heading>
               <Divider />
-              <HStack spacing={20} justifyContent={'center'} alignItems={'center'} h={'100%'}>
+              <HStack spacing={10} justifyContent={'center'} alignItems={'center'} h={'100%'}>
                 <VStack alignItems={'flex-start'} spacing={5}>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.join_date}</Heading>
+                    <Heading size={'md'}>{data?.join_date ? data?.join_date : '0000-00-00'}</Heading>
                     <Text>가입일</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.first_regular_game_date}</Heading>
+                    <Heading size={'md'}>
+                      {data?.first_regular_game_date ? data?.first_regular_game_date : '0000-00-00'}
+                    </Heading>
                     <Text>첫 정기전 참여</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.continuous_days} 일</Heading>
+                    <Heading size={'md'}>{data?.continuous_days ? data?.continuous_days : '0'} 일</Heading>
                     <Text>함께한 날</Text>
                   </VStack>
                 </VStack>
-                <VStack alignItems={'flex-start'} spacing={4}>
+                <VStack alignItems={'flex-start'} spacing={5}>
                   <VStack alignItems={'flex-start'} spacing={1}>
                     <Heading size={'md'}>{data?.total_regular_game_count}</Heading>
                     <Text>정기전 참여 횟수</Text>
@@ -78,25 +102,41 @@ export default function RecordsMe() {
             </VStack>
           </GridItem>
 
-          <GridItem colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
+          <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
             <VStack h={'100%'} py={4}>
               <Heading fontSize={26}>기록</Heading>
               <Divider />
               <HStack spacing={20} justifyContent={'center'} alignItems={'center'} h={'100%'}>
                 <VStack alignItems={'flex-start'} spacing={5}>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.total_average}</Heading>
+                    <Heading size={'md'} color={(data?.total_average as number) >= 200 ? 'goldenrod' : 'current'}>
+                      {data?.total_average}
+                    </Heading>
                     <Text>전체 에버리지</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>
-                      {Math.max(...(data?.average_rank_change.map(x => x.score) as number[]))}
+                    <Heading
+                      size={'md'}
+                      color={
+                        Math.max(...(data?.regular_game_scores.map(x => x.average) as number[])) >= 200
+                          ? 'goldenrod'
+                          : 'current'
+                      }
+                    >
+                      {Math.max(...(data?.regular_game_scores.map(x => x.average) as number[]))}
                     </Heading>
                     <Text>최고 에버</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>
-                      {Math.min(...(data?.average_rank_change.map(x => x.score) as number[]))}
+                    <Heading
+                      size={'md'}
+                      color={
+                        Math.min(...(data?.regular_game_scores.map(x => x.average) as number[])) >= 200
+                          ? 'goldenrod'
+                          : 'current'
+                      }
+                    >
+                      {Math.min(...(data?.regular_game_scores.map(x => x.average) as number[]))}
                     </Heading>
                     <Text>최저 에버</Text>
                   </VStack>
@@ -106,17 +146,30 @@ export default function RecordsMe() {
                     <HStack>
                       <Heading size={'md'}>{data?.max_rank}</Heading>
                       <Text fontSize={'sm'} fontWeight={'bold'}>
-                        ({data?.max_rank_count}번)
+                        ({data?.max_rank_count}회)
                       </Text>
                     </HStack>
                     <Text>최고 등수</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.max_score}</Heading>
+                    <Heading
+                      size={'md'}
+                      color={
+                        (data?.max_score as number) === 300
+                          ? 'red'
+                          : (data?.max_score as number) >= 200
+                          ? 'goldenrod'
+                          : 'current'
+                      }
+                    >
+                      {data?.max_score}
+                    </Heading>
                     <Text>최고 점수</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.min_score}</Heading>
+                    <Heading size={'md'} color={(data?.min_score as number) >= 200 ? 'goldenrod' : 'current'}>
+                      {data?.min_score}
+                    </Heading>
                     <Text>최저 점수</Text>
                   </VStack>
                   {/* <VStack alignItems={'flex-start'} spacing={1} h={'52px'}></VStack> */}
@@ -126,9 +179,119 @@ export default function RecordsMe() {
           </GridItem>
 
           <GridItem
-            p={5}
-            paddingLeft={0}
+            h={310}
             colSpan={4}
+            border={'1px'}
+            borderColor={'gray.200'}
+            shadow={'md'}
+            rounded={'xl'}
+            w={'100%'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <VStack w={'100%'} h={'100%'} pt={4}>
+              <Heading fontSize={26}>에버리지 / 등수 변화</Heading>
+              <Divider />
+              <Box w={'100%'} h={'100%'} pr={5}>
+                <ReactApexChart
+                  type="area"
+                  height={228}
+                  series={[
+                    { name: '에버리지', data: data?.regular_game_scores.map(x => x.average) as number[], type: 'area' },
+                    { name: '순위', data: data?.regular_game_scores.map(x => x.rank) as number[], type: 'line' },
+                  ]}
+                  options={{
+                    dataLabels: { enabled: false },
+                    xaxis: { labels: { show: false }, categories: data?.regular_game_scores.map(x => x.date.date) },
+                    yaxis: [
+                      { max: 300, min: 0, tickAmount: 3, decimalsInFloat: 0 },
+                      { reversed: true, min: 1, labels: { show: false } },
+                    ],
+                    grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
+                    plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
+                    legend: { show: false },
+                  }}
+                />
+              </Box>
+            </VStack>
+          </GridItem>
+
+          <GridItem
+            h={310}
+            colSpan={6}
+            border={'1px'}
+            borderColor={'gray.200'}
+            shadow={'md'}
+            rounded={'xl'}
+            w={'100%'}
+            justifyContent={'center'}
+            alignItems={'center'}
+          >
+            <VStack w={'100%'} h={'100%'} pt={4}>
+              <Heading fontSize={26}>점수대별 기록</Heading>
+              <Divider />
+              <Box w={'100%'} h={'100%'} pr={5} pl={3}>
+                <ReactApexChart
+                  type="bar"
+                  height={228}
+                  series={[
+                    {
+                      data: [
+                        data?.average_area[0],
+                        data?.average_area[1],
+                        data?.average_area[2],
+                        data?.average_area[3],
+                        data?.average_area[4],
+                        data?.average_area[5],
+                        data?.average_area[6],
+                        data?.average_area[7],
+                        data?.average_area[8],
+                        data?.average_area[9],
+                        data?.average_area[10],
+                        data?.average_area[11],
+                        data?.average_area[12],
+                        data?.average_area[13],
+                        data?.average_area[14],
+                        data?.average_area[15],
+                        data?.average_area[16],
+                        data?.average_area[17],
+                        data?.average_area[18],
+                        data?.average_area[19],
+                        data?.average_area[20],
+                        data?.average_area[21],
+                        data?.average_area[22],
+                        data?.average_area[23],
+                        data?.average_area[24],
+                        data?.average_area[25],
+                        data?.average_area[26],
+                        data?.average_area[27],
+                        data?.average_area[28],
+                        data?.average_area[29],
+                        data?.average_area[30],
+                      ] as number[],
+                    },
+                  ]}
+                  options={{
+                    dataLabels: { enabled: true },
+                    xaxis: {
+                      categories: [
+                        0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200,
+                        210, 220, 230, 240, 250, 260, 270, 280, 290, 300,
+                      ],
+                    },
+                    yaxis: { labels: { show: false }, min: 0, tickAmount: 3, decimalsInFloat: 0 },
+                    grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
+                    legend: { show: false },
+                    tooltip: { enabled: false },
+                    plotOptions: { bar: { borderRadius: 5, dataLabels: { position: 'top' } } },
+                  }}
+                />
+              </Box>
+            </VStack>
+          </GridItem>
+
+          <GridItem
+            colSpan={6}
             border={'1px'}
             borderColor={'gray.200'}
             shadow={'md'}
@@ -138,33 +301,11 @@ export default function RecordsMe() {
             justifyContent={'center'}
             alignItems={'center'}
           >
-            <ReactApexChart
-              type="area"
-              height={'100%'}
-              series={[
-                { name: '에버리지', data: data?.average_rank_change.map(x => x.score) as number[], type: 'area' },
-                { name: '순위', data: data?.average_rank_change.map(x => x.rank) as number[], type: 'line' },
-              ]}
-              options={{
-                dataLabels: { enabled: false },
-                xaxis: { labels: { show: false }, categories: data?.average_rank_change.map(x => x.date) },
-                yaxis: [
-                  { max: 300, min: 0, tickAmount: 3, decimalsInFloat: 0 },
-                  { reversed: true, min: 1, labels: { show: false } },
-                ],
-                grid: { strokeDashArray: 5, xaxis: { lines: { show: true } } },
-                plotOptions: { bar: { horizontal: true, dataLabels: { position: 'top' } } },
-                legend: { show: false },
-              }}
-            />
-          </GridItem>
-
-          <GridItem colSpan={2}>
-            <Box h={'100%'} bgColor={'red'} rounded={'xl'}></Box>
-          </GridItem>
-
-          <GridItem colSpan={4}>
-            <Box h={'100%'} bgColor={'red'} rounded={'xl'}></Box>
+            <VStack w={'100%'} h={'100%'} pt={4}>
+              <Heading fontSize={26}>과거 정기전 기록</Heading>
+              <Divider />
+              <Box w={'100%'} h={'100%'} pr={5}></Box>
+            </VStack>
           </GridItem>
         </Grid>
       ) : null}

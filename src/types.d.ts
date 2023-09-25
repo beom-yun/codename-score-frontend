@@ -42,6 +42,19 @@ export interface IRegularGameScore {
   rank: number;
 }
 
+export interface ITinyRegularGameScore {
+  score1: number;
+  score2: number;
+  score3: number;
+  score4: number;
+  total_score: number;
+  game_count: number;
+  average: number;
+  high_low: number;
+  rank: number;
+  date: IRegularGameDate;
+}
+
 export interface IPasswordLoginVariables {
   username: string;
   password: string;
@@ -97,8 +110,7 @@ export interface IMyRecords {
     '29': number;
     '30': number;
   };
-  average_rank_change: IDateScoreRank[];
-  // rank_change: number[];
+  regular_game_scores: ITinyRegularGameScore[];
 }
 
 export interface IDateScoreRank {
