@@ -1,4 +1,21 @@
-import { Avatar, Box, Divider, Grid, GridItem, HStack, Heading, Text, VStack } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Divider,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  VStack,
+} from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getMyRecords } from '../api';
 import { IMyRecords } from '../types';
@@ -17,7 +34,7 @@ export default function RecordsMe() {
           py={10}
           w={'100%'}
           px={{ sm: 10, md: 20, lg: 40 }}
-          h={'1050px'}
+          h={1200 + (data?.regular_game_scores.length as number) * 33}
           gap={5}
           templateRows={'repeat(4, 1fr)'}
           templateColumns={'repeat(6, 1fr)'}
@@ -44,21 +61,18 @@ export default function RecordsMe() {
           </GridItem>
 
           <GridItem h={310} colSpan={2} border={'1px'} borderColor={'gray.200'} shadow={'md'} rounded={'xl'}>
-            <VStack alignItems={'center'} h={'100%'} py={4}>
+            <VStack alignItems={'center'} h={'100%'} pt={4}>
               <Heading fontSize={26}>프로필</Heading>
               <Divider />
               <VStack spacing={2} justifyContent={'center'} h={'100%'}>
-                <Avatar size={{ sm: 'md', md: 'lg', lg: 'xl' }} src={user?.avatar} name={user?.name} mb={2} />
-                <Heading>{user?.name}</Heading>
-                <Text>
-                  {user?.position === 'chairman'
-                    ? '회장'
-                    : user?.position === 'executive'
-                    ? '운영진'
-                    : user?.position === 'general'
-                    ? '일반회원'
-                    : '게스트'}
-                </Text>
+                <ReactApexChart
+                  type="radar"
+                  height={'100%'}
+                  series={[{ data: [80, 60, 50, 70, 80, 90] }]}
+                  options={{
+                    xaxis: { categories: ['참여율', '최고 점수', '최고 에버', '전체 에버', '시드', '회비 납부'] },
+                  }}
+                />
               </VStack>
             </VStack>
           </GridItem>
@@ -67,7 +81,7 @@ export default function RecordsMe() {
             <VStack h={'100%'} py={4}>
               <Heading fontSize={26}>일반</Heading>
               <Divider />
-              <HStack spacing={10} justifyContent={'center'} alignItems={'center'} h={'100%'}>
+              <HStack spacing={12} justifyContent={'center'} alignItems={'center'} h={'100%'}>
                 <VStack alignItems={'flex-start'} spacing={5}>
                   <VStack alignItems={'flex-start'} spacing={1}>
                     <Heading size={'md'}>{data?.join_date ? data?.join_date : '0000-00-00'}</Heading>
@@ -86,8 +100,8 @@ export default function RecordsMe() {
                 </VStack>
                 <VStack alignItems={'flex-start'} spacing={5}>
                   <VStack alignItems={'flex-start'} spacing={1}>
-                    <Heading size={'md'}>{data?.total_regular_game_count}</Heading>
-                    <Text>정기전 참여 횟수</Text>
+                    <Heading size={'md'}>{data?.total_regular_game_count} 회</Heading>
+                    <Text>정기전 참여</Text>
                   </VStack>
                   <VStack alignItems={'flex-start'} spacing={1}>
                     <Heading size={'md'}>{data?.total_game_count}</Heading>
@@ -234,43 +248,7 @@ export default function RecordsMe() {
                 <ReactApexChart
                   type="bar"
                   height={228}
-                  series={[
-                    {
-                      data: [
-                        data?.average_area[0],
-                        data?.average_area[1],
-                        data?.average_area[2],
-                        data?.average_area[3],
-                        data?.average_area[4],
-                        data?.average_area[5],
-                        data?.average_area[6],
-                        data?.average_area[7],
-                        data?.average_area[8],
-                        data?.average_area[9],
-                        data?.average_area[10],
-                        data?.average_area[11],
-                        data?.average_area[12],
-                        data?.average_area[13],
-                        data?.average_area[14],
-                        data?.average_area[15],
-                        data?.average_area[16],
-                        data?.average_area[17],
-                        data?.average_area[18],
-                        data?.average_area[19],
-                        data?.average_area[20],
-                        data?.average_area[21],
-                        data?.average_area[22],
-                        data?.average_area[23],
-                        data?.average_area[24],
-                        data?.average_area[25],
-                        data?.average_area[26],
-                        data?.average_area[27],
-                        data?.average_area[28],
-                        data?.average_area[29],
-                        data?.average_area[30],
-                      ] as number[],
-                    },
-                  ]}
+                  series={[{ data: data?.average_area as number[] }]}
                   options={{
                     dataLabels: { enabled: true },
                     xaxis: {
@@ -304,7 +282,99 @@ export default function RecordsMe() {
             <VStack w={'100%'} h={'100%'} pt={4}>
               <Heading fontSize={26}>과거 정기전 기록</Heading>
               <Divider />
-              <Box w={'100%'} h={'100%'} pr={5}></Box>
+              <Box w={'100%'} h={'100%'} p={5}>
+                <TableContainer>
+                  <Table variant={'striped'} size={'sm'}>
+                    <Thead>
+                      <Tr>
+                        <Th textAlign={'center'}>회차</Th>
+                        <Th textAlign={'center'}>날짜</Th>
+                        <Th textAlign={'center'}>AVG</Th>
+                        <Th textAlign={'center'}>RANK</Th>
+                        <Th textAlign={'center'}>TOTAL</Th>
+                        <Th textAlign={'center'}>1G</Th>
+                        <Th textAlign={'center'}>2G</Th>
+                        <Th textAlign={'center'}>3G</Th>
+                        <Th textAlign={'center'}>4G</Th>
+                        <Th textAlign={'center'}>HIGH LOW</Th>
+                        <Th textAlign={'center'}>시드</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {data?.regular_game_scores
+                        .slice(0)
+                        .reverse()
+                        .map(score => (
+                          <Tr key={score.date.id}>
+                            <Td>
+                              <Text textAlign={'center'}>{score.date.round_of_game}</Text>
+                            </Td>
+                            <Td>
+                              <Text textAlign={'center'}>{score.date.date}</Text>
+                            </Td>
+                            <Td>
+                              <Text
+                                textColor={score.average >= 200 ? 'goldenrod' : 'current'}
+                                fontWeight={score.average >= 200 ? 'bold' : 'current'}
+                                textAlign={'center'}
+                              >
+                                {score.average}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <Text textAlign={'center'}>{score.rank}</Text>
+                            </Td>
+                            <Td>
+                              <Text textAlign={'center'}>{score.total_score}</Text>
+                            </Td>
+                            <Td>
+                              <Text
+                                textColor={score.score1 === 300 ? 'red' : score.score1 >= 200 ? 'goldenrod' : 'current'}
+                                fontWeight={score.score1 >= 200 ? 'bold' : 'current'}
+                                textAlign={'center'}
+                              >
+                                {score.score1}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <Text
+                                textColor={score.score2 === 300 ? 'red' : score.score2 >= 200 ? 'goldenrod' : 'current'}
+                                fontWeight={score.score2 >= 200 ? 'bold' : 'current'}
+                                textAlign={'center'}
+                              >
+                                {score.score2}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <Text
+                                textColor={score.score3 === 300 ? 'red' : score.score3 >= 200 ? 'goldenrod' : 'current'}
+                                fontWeight={score.score3 >= 200 ? 'bold' : 'current'}
+                                textAlign={'center'}
+                              >
+                                {score.score3}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <Text
+                                textColor={score.score4 === 300 ? 'red' : score.score4 >= 200 ? 'goldenrod' : 'current'}
+                                fontWeight={score.score4 >= 200 ? 'bold' : 'current'}
+                                textAlign={'center'}
+                              >
+                                {score.score4}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <Text textAlign={'center'}>{score.high_low}</Text>
+                            </Td>
+                            <Td>
+                              <Text textAlign={'center'}>0</Text>
+                            </Td>
+                          </Tr>
+                        ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </Box>
             </VStack>
           </GridItem>
         </Grid>
