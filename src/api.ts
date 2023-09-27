@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookie from 'js-cookie';
-import { IEditMyPage, IPasswordLoginVariables } from './types';
+import { ICreateRegularGameDate, IEditMyPage, IPasswordLoginVariables } from './types';
 import { QueryFunctionContext } from '@tanstack/react-query';
 
 const instance = axios.create({
@@ -46,4 +46,9 @@ export const getMyRecords = () => instance.get('regular-games/me/').then(respons
 export const editMyPage = (variables: IEditMyPage) =>
   instance
     .put('users/me/', variables, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
+    .then(response => response.data);
+
+export const createRegularGameDate = ({ round_of_game, date }: ICreateRegularGameDate) =>
+  instance
+    .post('regular-games/', { round_of_game, date }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
     .then(response => response.data);

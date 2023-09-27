@@ -27,7 +27,7 @@ export default function RegularGameChart() {
           {data && radioValue === '1' ? (
             <ReactApexChart
               type="bar"
-              height={dateData ? (dateData?.num_of_bowlers < 2 ? 150 : 50 * dateData?.num_of_bowlers) : 0}
+              height={dateData ? (dateData?.num_of_bowlers < 2 ? 99 : 30 * dateData?.num_of_bowlers + 69) : 0}
               series={[
                 {
                   name: '평균',
@@ -51,7 +51,7 @@ export default function RegularGameChart() {
           ) : data && radioValue === '2' ? (
             <ReactApexChart
               type="bar"
-              height={dateData ? (dateData?.num_of_bowlers < 2 ? 300 : 100 * dateData?.num_of_bowlers) : 0}
+              height={dateData ? (dateData?.num_of_bowlers < 2 ? 159 : 60 * dateData?.num_of_bowlers + 90) : 0}
               series={[
                 {
                   name: '1게임',
@@ -87,7 +87,7 @@ export default function RegularGameChart() {
           ) : data && radioValue === '3' ? (
             <ReactApexChart
               type="bar"
-              height={dateData ? (dateData?.num_of_bowlers < 2 ? 150 : 50 * dateData?.num_of_bowlers) : 0}
+              height={dateData ? (dateData?.num_of_bowlers < 2 ? 99 : 30 * dateData?.num_of_bowlers + 69) : 0}
               series={[
                 {
                   name: '총점',

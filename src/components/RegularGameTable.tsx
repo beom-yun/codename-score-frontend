@@ -12,7 +12,6 @@ export default function RegularGameTable() {
   return (
     <TableContainer w={'100%'} mt={5}>
       <Table variant={'striped'} size={'sm'}>
-        {/* <TableCaption>caption</TableCaption> */}
         <Thead>
           <Tr h={10}>
             <Th textAlign={'center'}>순위</Th>

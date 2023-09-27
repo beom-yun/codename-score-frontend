@@ -5,6 +5,11 @@ export interface IRegularGameDate {
   num_of_bowlers: number;
 }
 
+export interface ICreateRegularGameDate {
+  round_of_game: number;
+  date: string;
+}
+
 export interface IUser {
   id: number;
   last_login: string;
