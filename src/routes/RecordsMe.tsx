@@ -71,10 +71,12 @@ export default function RecordsMe() {
                   series={[
                     {
                       data: [
-                        data?.participation_rate,
-                        (data?.max_score as number) / 3,
-                        Math.max(...(data?.regular_game_scores.map(x => x.average) as number[])) / 3,
-                        (data?.total_average as number) / 3,
+                        data?.participation_rate ? data?.participation_rate : 0,
+                        data?.max_score ? (data?.max_score as number) / 3 : 0,
+                        data?.regular_game_scores.length === 0
+                          ? 0
+                          : Math.max(...(data?.regular_game_scores.map(x => x.average) as number[])) / 3,
+                        data?.total_average ? (data?.total_average as number) / 3 : 0,
                         50,
                         50,
                       ] as number[],
@@ -199,7 +201,6 @@ export default function RecordsMe() {
                     </Heading>
                     <Text>최저 점수</Text>
                   </VStack>
-                  {/* <VStack alignItems={'flex-start'} spacing={1} h={'52px'}></VStack> */}
                 </VStack>
               </HStack>
             </VStack>

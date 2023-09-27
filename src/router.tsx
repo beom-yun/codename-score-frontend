@@ -8,6 +8,7 @@ import RecordsDetail from './routes/RecordsDetail';
 import RecordsRegularGame from './routes/RecordsRegularGame';
 import RecordsMe from './routes/RecordsMe';
 import MyPage from './routes/MyPage';
+import NewRegularGame from './routes/NewRegularGame';
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'records',
         element: <RecordsHome />,
+      },
+      {
+        path: 'records/regular-games/new',
+        element: <NewRegularGame />,
       },
       {
         path: 'records/regular-games',
