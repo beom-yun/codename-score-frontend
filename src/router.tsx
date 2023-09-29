@@ -9,6 +9,7 @@ import RecordsRegularGame from './routes/RecordsRegularGame';
 import RecordsMe from './routes/RecordsMe';
 import MyPage from './routes/MyPage';
 import NewRegularGame from './routes/NewRegularGame';
+import EditRegularGame from './routes/EditRegularGame';
 
 const router = createBrowserRouter([
   {
@@ -37,14 +38,14 @@ const router = createBrowserRouter([
         element: <NewRegularGame />,
       },
       {
+        path: 'records/regular-games/edit',
+        element: <RecordsRegularGame />,
+        children: [{ path: ':datePk', element: <EditRegularGame /> }],
+      },
+      {
         path: 'records/regular-games',
         element: <RecordsRegularGame />,
-        children: [
-          {
-            path: ':datePk',
-            element: <RecordsDetail />,
-          },
-        ],
+        children: [{ path: ':datePk', element: <RecordsDetail /> }],
       },
       {
         path: 'records/me',

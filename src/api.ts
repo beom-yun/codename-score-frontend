@@ -52,3 +52,12 @@ export const createRegularGameDate = ({ round_of_game, date }: ICreateRegularGam
   instance
     .post('regular-games/', { round_of_game, date }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
     .then(response => response.data);
+
+export const createRegularGameScore = ({ date_pk, bowler_pk }: { date_pk: number; bowler_pk: number }) =>
+  instance
+    .post(
+      `regular-games/${date_pk}/scores/`,
+      { bowler: bowler_pk },
+      { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' }
+    )
+    .then(response => response.data);
