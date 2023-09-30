@@ -3,11 +3,13 @@ export interface IRegularGameDate {
   round_of_game: number;
   date: string;
   num_of_bowlers: number;
+  lanes: string;
 }
 
 export interface ICreateRegularGameDate {
   round_of_game: number;
   date: string;
+  lanes?: string;
 }
 
 export interface IUser {

@@ -48,9 +48,13 @@ export const editMyPage = (variables: IEditMyPage) =>
     .put('users/me/', variables, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
     .then(response => response.data);
 
-export const createRegularGameDate = ({ round_of_game, date }: ICreateRegularGameDate) =>
+export const createRegularGameDate = ({ round_of_game, date, lanes }: ICreateRegularGameDate) =>
   instance
-    .post('regular-games/', { round_of_game, date }, { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' })
+    .post(
+      'regular-games/',
+      { round_of_game, date, lanes },
+      { headers: { 'X-CSRFToken': Cookie.get('csrftoken') } || '' }
+    )
     .then(response => response.data);
 
 export const createRegularGameScore = ({ date_pk, bowler_pk }: { date_pk: number; bowler_pk: number }) =>

@@ -1,8 +1,6 @@
 import {
   Button,
   Input,
-  NumberInput,
-  NumberInputField,
   Tab,
   TabList,
   TabPanel,
